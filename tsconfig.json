@@ -7,7 +7,11 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "esnext",
+
+    // module tells typeScript Compiler (TSC) which module your typeScript should be compiled to. It can be esnext or commonJs or nodenext
+    "module": "commonJS",
+
+    // which javaScript version should my typeScript be compiled to
     "target": "esnext",
     "types": [],
     // For nodejs:
@@ -33,6 +37,8 @@
     // "noPropertyAccessFromIndexSignature": true,
 
     // Recommended Options
+
+    // ensure strictly checks for invalid code
     "strict": true,
     "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
@@ -41,6 +47,11 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
   },
-  "include" : ["src"],
-  "exclude" : ["node_modules"]
+  // include tells typeScript where to look into for the typeScript files
+  "include" : [
+    "src"
+  ],
+  "exclude" : [
+    "node_modules"
+  ]
 }
