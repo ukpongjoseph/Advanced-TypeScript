@@ -321,3 +321,84 @@ const persons4 : femaleOrMale = {
 
 // From the examples above boy fulfils type Male, girl fulfils type female, persons1 contains all properties of Male and female as it is an intersection, persons2 and persons3 is of type femaleOrMale as it fulfils either of Male or female or even both as seen in persons4
 // It is worth noting that unions come up more naturally than intersections
+
+// ARRAYS
+// Arrays in ts are similar to those of js. They are a special kind of object that support searching, pushing, concatenation, searching and slicing
+let arr1 : number[] = []
+let arr2 : string[] = []
+let arr3 : boolean []= []
+let arr : [] = []
+let arr4 : (string|number)[] = []
+arr4.push(7)
+arr4.push("down")
+// It is a general rule of thumb to keep arrays homogenoeous, do not mix different types in one array. Each array should be for each type just like arr1, arr2, arr3.
+
+
+// TUPLES
+// Tuples are a subtype of arrays. They must be explicitly defined and this is because they also use square brackets. This explicit declaration allows typeScript to identify a tuple. They also have fixed lenghts except when used with rest operators. Tuples can have optional elements just like in Objects
+
+// An heterogenous tuple
+let tup : [number, string, boolean] = [3, "love", true]
+
+// tuple with optional element
+let tup1 : [number, number, string, number?] = [2, 3, "hatred"]
+tup1 = [23, 45, "shiba", 45]
+
+// tuples with rest operator
+// Rest operators allows tuples hold flexible numbers of elements just like key-index signature of objects
+let tup2 : [string, boolean, ...number[]] = ["tate", false, 3,4,5,6,7,8]
+
+// READ-ONLY ARRAYS AND TUPLES
+// Arrays and tuples are changeable. To make them unchangeable, we use the readonly keyword on them
+let arr5 : readonly number[] = [1,2,3,4,5]
+let tup3 : readonly [number, string, boolean] = [7, "trouser", true]
+
+// To update a readonly array , one needs to copy the elements of the array or tuple into a new one and concatenate the new values into the new one (usually an array) while keeping the old array or tuple. Mind you when using the concat method, the type of the new element (an array) and the previous array or tuple must match
+let tup4  = tup3.concat("Rhemy")
+let arr6 = arr5.concat(7)
+// When using the concat method on a prev tuple it results in an array not a tuple. To create a new tuple from an old tuple, typeScript programmers have to be explicit. Example is shown below
+let tup5 : [number, string, boolean, string, number] = [...tup3, "fola", 6]
+// Now, tup5 is a tuple
+
+// NUL, UNDEFINED, VOID AND NEVER
+// When there is an absence of value, typescript represents it as null or undefined. To be more specific, udefined means a value has not been given yet while null means the absolute absence of a value
+// In addition to null and undefined, there is void and never. These are special types where void is mostly used in functions that doesn't expliciitly return a value while never on the other hand entails an operation that runs forever, one that throws an error or a function that never returns anything. Null is the intentional absence of a value. Both null and undefined are actaul values while never and void are basically function return types. All of these will be used in an example below
+
+// Null
+function check(a:number) : number|null {
+    if(a>0)
+        return a
+    else
+        return null
+}
+
+// Undefined
+let test1 : number | undefined
+
+// Void
+function report (a:string) : void {
+    console.log(a)
+}
+
+// Never
+function catchError(a: number) : never {
+    while(a){
+        console.log(a)
+    }
+    throw TypeError("a is not reachable")
+}
+
+// ENUMS
+// Enums are list of possible values for a type. They are unordered data that map keys to values. There are two types of enums, string to string or string to number. 
+// Enums are not variables, hence they are not declared with variable declarator 
+enum Languages {English, Spanish, French, Russian}
+// By convention, enums keys and names are uppercase and typescript do infer values to enums members if not explicitly defined. For example, English is 1, Spanish is 2, French is 3 while Russian is 4. Values can also be explicitly mapped to each key
+enum boys {
+    Dayo = 1, 
+    Daniel = 2, 
+    Jide = 3, 
+    Stephen = 4
+}
+// Members of an enum can be retreived using the dot or bracket notation just like with objects. With the dot notation, the member name is used but with the bracket notation, the index is used just like array index
+const firstBoy = boys.Dayo
+const lastBoy = boys[4]
