@@ -173,16 +173,44 @@ function sum6(a, b) {
 // We could use unions but this would make the code base too long as we would want our union to cover for arrays, objects, numbers, booleans and string and the function implementation would need to cover for all these scenarios. This is where generics comes in.
 // With Generics, we can rewrite the function as;
 let filter;
+// The function call signature below is of type filter1, it takes 2 parameters and return a value. It should be noticed that the return type of the call signature and the type of the first parameter are similar and that is because, in the type filter the return type and the type of the first parameter are similar
+let testFilter1 = (a, b) => a;
 const personalDetails = {
     name: "Tar1q",
     age: 23,
     phoneNumber: 12345678
 };
+let pack;
+pack = (a, b) => {
+    return [a, b];
+};
+pack(true, false);
 const mapData = (a, b) => {
     return a.map(b);
 };
-// In the example above, generic type T and U are used on the call signature and function.
-//                                       GENRIC TYPE INFERENCE
-// TypeScript can infer the type of a generic type parameter by looking at the data passed/bound to the placeholder, generic type. We can also explicitly annotate the type but in doing this , the "All or nothing rule must be applied". If you have x number of generic type parameter, all of their types must be explicitly annotated without leaving anyone out.
-// There are certain scenerios where typeScript can infer wrongly, that is why explicit annotation can be necessary and useful.
+const person1 = {
+    name: "Shalli",
+    age: 23
+};
+let Box1 = { value: "Yellow_box" };
+const Benz = {
+    name: "Imisi",
+    age: 45
+};
+let addToArray;
+addToArray = (a) => {
+    return a;
+};
+addToArray([1, 2, 3, 4, 5]);
+function multiConstraint(a) {
+    return a;
+}
+multiConstraint({ name: "Imisi", age: 45 });
+let handle;
+handle = (a) => {
+    return a;
+};
+// In the function above, a default type is passed. If no type is passed, the default type (varType) is used.
+// If a type were to be specified explicitly, it would be at function call as seen below
+handle("Hello");
 //# sourceMappingURL=Function.js.map
