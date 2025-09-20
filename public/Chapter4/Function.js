@@ -164,4 +164,25 @@ function sum6(a, b) {
     }
 }
 // From example 2, it can be seeen that the function implementation handles all cases (string or number)
+//          POLYMORPHISM AND GENERICS.
+// The concept of polymorphism is that a piece of code/function can work with many and different data types. The most import kind of polymorphism is the generic polymorphism also called parametric polymorphism. So far, we have been working with concrete types (Strings, booleans, number, arrays). They are called concrete types because our code knows what to expect and if any other thing is fed to the code, the code will break. In cases, where we don't know what data type to expect, how do we write our code?
+// Say we have a function called filter, that expects data in form of an array (but array of what?) and filter the data based on certain conditions. How do we write the function when we don't know know what to expect.
+// let filter:(a:any[], b:any)=>any[]
+// The function above is loose as both parameters have the type any (which is the safest bet but this makes the function loose)
+// We can define the function to expect strings but that is concrete and it may throw if something else is fed into the function and the same goes for numbers, array of numbers, array of strings and other concrete data type.
+// We could use unions but this would make the code base too long as we would want our union to cover for arrays, objects, numbers, booleans and string and the function implementation would need to cover for all these scenarios. This is where generics comes in.
+// With Generics, we can rewrite the function as;
+let filter;
+const personalDetails = {
+    name: "Tar1q",
+    age: 23,
+    phoneNumber: 12345678
+};
+const mapData = (a, b) => {
+    return a.map(b);
+};
+// In the example above, generic type T and U are used on the call signature and function.
+//                                       GENRIC TYPE INFERENCE
+// TypeScript can infer the type of a generic type parameter by looking at the data passed/bound to the placeholder, generic type. We can also explicitly annotate the type but in doing this , the "All or nothing rule must be applied". If you have x number of generic type parameter, all of their types must be explicitly annotated without leaving anyone out.
+// There are certain scenerios where typeScript can infer wrongly, that is why explicit annotation can be necessary and useful.
 //# sourceMappingURL=Function.js.map
