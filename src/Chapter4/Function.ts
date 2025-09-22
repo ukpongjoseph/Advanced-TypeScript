@@ -219,16 +219,25 @@ function sum6(a:string|number, b:string|number):string|number{
 // The function above is loose as both parameters have the type any (which is the safest bet but this makes the function loose)
 // We can define the function to expect strings but that is concrete and it may throw if something else is fed into the function and the same goes for numbers, array of numbers, array of strings and other concrete data type.
 // We could use unions but this would make the code base too long as we would want our union to cover for arrays, objects, numbers, booleans and string and the function implementation would need to cover for all these scenarios. This is where generics comes in.
+
+
 // With Generics, we can rewrite the function as;
 let filter:<T>(a:T[], b:(item: T)=>boolean)=>T[]
 // Where T can represent any data type. T can represent strings, numbers, boolean, objects and even arrays
+// In the function above we are saying that filter is a function that works with type, "T". it takes two parameters, an array of type T and a function that recieves the type T as argument and return a boolean as output. The function filter returns an array of type T as output
+
+
 // A type aliase can be created for the function filter. This type (filter1) is a full call signature while filter2 is a short call signature
 type filter1 = {
     <T>(a:T[], b:(item: T)=>boolean) : T[]
 }
 type filter2 = <T>(a:T[], b:T) => T[]
+// The function call signature below is of type filter1, it takes 2 parameters and return a value. It should be noticed that the return type of the call signature and the type of the first parameter are similar and that is because, in the type filter the return type and the type of the first parameter are similar
+let testFilter1 : filter1 = (a,b)=>a
 // We declare generics using the angled brackets <>.
 // Using Generics, typeScript can infer the data type of any data that the function receives. The Generic type variable/ Generic type Parameter (T) is just a placeholder that can be replaced with any data type. Generics works not only with functions but with Classes, Interface and Type aliases. In filter1 and filter2, the generic is used inside the function call signature.
+
+
 //                                        WHERE ARE GENERICS BOUND?
 // In simple definition, Generics are bound when they are used in functions, classes, interface and type aliases.
 // Generics are placehoders for concrete types but when does typeScript decide what type goes into the placeholder
@@ -243,6 +252,11 @@ const personalDetails : genType<number> = {
     age : 23,
     phoneNumber : 12345678
 }
+let pack : <T>(a:T,b:T) => T[]
+pack = (a,b) => {
+    return [a,b]
+}
+pack(true, false)
 // As seen above, we had to explicitly bind the generic type to the interface and the class created from the interface by specifying that the generic type should be a number
 
 //                                  WHERE CAN YOU DECLARE GENERICS
@@ -255,7 +269,70 @@ const mapData : dataMap =  (a, b) => {
     return a.map(b)
 }
 // In the example above, generic type T and U are used on the call signature and function.
-
+ 
 //                                       GENRIC TYPE INFERENCE
 // TypeScript can infer the type of a generic type parameter by looking at the data passed/bound to the placeholder, generic type. We can also explicitly annotate the type but in doing this , the "All or nothing rule must be applied". If you have x number of generic type parameter, all of their types must be explicitly annotated without leaving anyone out.
 // There are certain scenerios where typeScript can infer wrongly, that is why explicit annotation can be necessary and useful.
+
+//                                       GENERIC TYPE ALIASE
+// A type aliase is a way of giving a type a name
+type instance = {name:string, age:number}
+const person1:instance = {
+    name:"Shalli",
+    age:23
+}
+// Generic type aliase on the other hand is a way of giving a generic type (flexible type) a name. This generic type is flexible, can be reused.
+// This is a classic example of using a Generic with a type aliase and this is different from usage of generics with call signature in that with call signature, the generic type parameter is bound to the function parameters (inside the type aliase and before and appears just before the opening parenthesis) but with type aliase, the generic type parameter is bound to the type before the assignment operator (equal sign)
+type Box<T> = {value : T}
+let Box1:Box<string> = {value : "Yellow_box"}
+// In the example above, T can be string, number or boolean making the type flexible to multiple data type
+// In the example below, we define a generic type aliase called myEvent. myEvent can be reused with other types (TimedEvent).
+type myEvent<T> = {
+    target:T,
+    value : string
+}
+type TimedEvent<T> = {
+    event : myEvent<T>,
+    from : Date,
+    to: Date
+}
+// From the example above, myEvent is reusable and what ever concrete type is bound to TimedEvent, the same will be bound to myEvent.
+
+//                                  BOUNDED POLYMORPHISM
+// In the examples above, the generic type parameter (T) can be anything. There is a way that we can limit the type (put a constraint on T) that fits with T and this is done with the keyword, "extends". An example is shown below
+interface Motor<T extends string>{
+    name : T,
+    age : number
+}
+const Benz :Motor<string>  = {
+    name : "Imisi",
+    age : 45
+}
+type parameters = number[]
+let addToArray : <T extends parameters>(a:T)=>T
+addToArray = <T>(a:T) => {
+    return a
+}
+addToArray([1,2,3,4,5])
+// From the example above, the interface limits the generic type to strings and when the interface is used to structure the object Benz, the type is exteded to strings.
+
+//                              BOUNDED POLYMORPHISM WITH MULTIPLE CONSTRAINTS
+// Rather than put a single constraint on the generic type (T), we can put multiple constraint on it using the "&" operator.
+type first = {name:string}
+type second = {age:number}
+function multiConstraint <T extends first & second>(a:T):T{
+    return a
+}
+multiConstraint({name:"Imisi", age:45})
+// It can be seen that there are multiple constraint on the function , "multiConstraint". It extends first and second and not only one generic type.
+
+//                              GENERIC TYPE DEFAULT
+//  Just like how functions can have a default parameter, generics can have a default value. That is when a type is not specified, the default type that is sepcified is used. For example
+type varType = number[]
+let handle : <T = varType>(a:T)=>T
+handle = (a) => {
+    return a
+}
+// In the function above, a default type is passed. If no type is passed, the default type (varType) is used.
+// If a type were to be specified explicitly, it would be at function call as seen below
+handle<string> ("Hello")
