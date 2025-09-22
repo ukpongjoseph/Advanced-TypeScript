@@ -40,5 +40,7 @@ class Rook extends Piece {
 class Pawn extends Piece {
 }
 // TypeScript supports three access modifiers for variables and methods of a class. Public, protected and private...all these to encapsulate (hide) specific data and show the necessary ones.
-// We can make a class not public by using the abstract keyword
+// We can make a class not public by using the abstract keyword. With the abstract keyword, we cannot instantiate a class (create an object of the class), we can only inherit from such class. Abstarct classes can have normal methods and abstract method. When an abstract class, declares an abstract method, the sub classes of the abstract classes are tasked to implemment the abstract methods themselves. Class Piece above, has been modified to be abstract
+// Instantiating Piece is not permitted as it is abstract, so the code below is wrong
+// Piece obj1 = new Piece("A", 1, "white")
 //# sourceMappingURL=ClassesAndInheritance.js.map

@@ -42,7 +42,7 @@ class Position{
 // The class Position has two instance variables, file and rank of the type File and Rank respectively. These instance variables are set to private and initialized by the constructor. These variables are private in that they cannot be accessed outside their class except a getter and setter function is used (yet to be defined in the class). The getter function helps to fetch/read the value of the private variable while the setter function helps to set or write to the private variable. These functions can only be called by instances (objects created from the class) or subclass that inherits (via the extends keyword) the class properties and methods
 
 // Now, lets talk about the class, Piece
-class Piece{
+abstract class Piece{
     protected position : Position
     constructor(
         file:File,
@@ -60,4 +60,7 @@ class Knight extends Piece {}
 class Rook extends Piece {}
 class Pawn extends Piece {}
 // TypeScript supports three access modifiers for variables and methods of a class. Public, protected and private...all these to encapsulate (hide) specific data and show the necessary ones.
-// We can make a class not public by using the abstract keyword
+// We can make a class not public by using the abstract keyword. With the abstract keyword, we cannot instantiate a class (create an object of the class), we can only inherit from such class. Abstarct classes can have normal methods and abstract method. When an abstract class, declares an abstract method, the sub classes of the abstract classes are tasked to implemment the abstract methods themselves. Class Piece above, has been modified to be abstract
+
+// Instantiating Piece is not permitted as it is abstract, so the code below is wrong
+// Piece obj1 = new Piece("A", 1, "white")
